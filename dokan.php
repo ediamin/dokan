@@ -332,6 +332,7 @@ final class WeDevs_Dokan {
             require_once $inc_dir . 'admin/class-admin-pointers.php';
             require_once $inc_dir . 'admin-functions.php';
             require_once $inc_dir . 'admin/promotion.php';
+            require_once $inc_dir . 'admin/class-tools.php';
         } else {
             require_once $inc_dir . 'template-tags.php';
             require_once $inc_dir . 'class-theme-support.php';
@@ -358,6 +359,7 @@ final class WeDevs_Dokan {
             new Dokan_Upgrade();
             new Dokan_Setup_Wizard();
             new Dokan_Promotion();
+            new Dokan_Tools();
         }
 
         $this->container['pageview']      = new Dokan_Pageviews();

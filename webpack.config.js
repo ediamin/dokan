@@ -87,6 +87,15 @@ if ( isProduction() ) {
     appName = '[name].js';
 }
 
+plugins.push(new webpack.ProvidePlugin({
+    $: 'jquery',
+    __: '__',
+    _x: '_x',
+    __n: '__n',
+    _nx: '_nx',
+    sprintf: 'sprintf'
+}));
+
 module.exports = {
     entry: entryPoint,
     output: {
@@ -112,7 +121,12 @@ module.exports = {
     externals: {
         jquery: 'jQuery',
         'chart.js': 'Chart',
-        moment: 'moment'
+        moment: 'moment',
+        __: 'dokan.l10n.__',
+        _x: 'dokan.l10n._x',
+        __n: 'dokan.l10n.__n',
+        _nx: 'dokan.l10n._nx',
+        sprintf: 'dokan.l10n.sprintf'
     },
 
     plugins,

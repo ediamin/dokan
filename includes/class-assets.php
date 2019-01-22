@@ -148,6 +148,11 @@ class Dokan_Assets {
                 'component' => 'Help'
             ),
             array(
+                'path'      => '/tools',
+                'name'      => 'Tools',
+                'component' => 'Tools'
+            ),
+            array(
                 'path'      => '/settings',
                 'name'      => 'Settings',
                 'component' => 'Settings'
