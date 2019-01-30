@@ -3,6 +3,7 @@ import Withdraw from 'admin/pages/Withdraw.vue'
 import Premium from 'admin/pages/Premium.vue'
 import Help from 'admin/pages/Help.vue'
 import Tools from 'admin/pages/Tools.vue'
+import DemoContents from 'admin/pages/DemoContents.vue'
 import Settings from 'admin/pages/Settings.vue'
 
 let Vue    = dokan_get_lib('Vue')
@@ -15,6 +16,7 @@ dokan_add_route(Withdraw)
 dokan_add_route(Premium)
 dokan_add_route(Help)
 dokan_add_route(Tools)
+dokan_add_route(DemoContents)
 dokan_add_route(Settings)
 
 /**

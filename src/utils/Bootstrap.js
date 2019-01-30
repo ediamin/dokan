@@ -8,6 +8,7 @@ import '@/utils/i18n'
 import API_Helper from '@/utils/Api'
 import ChartJS from 'vue-chartjs'
 import i18n from '@/mixins/i18n'
+import alert from '@/mixins/alert'
 
 import {
   VclCode,
@@ -38,6 +39,7 @@ Vue.use(Notifications)
 // Vue.component('multiselect', Multiselect)
 
 Vue.mixin( i18n );
+Vue.mixin( alert );
 
 Vue.filter('currency', function (value) {
     return accounting.formatMoney(value, dokan.currency);

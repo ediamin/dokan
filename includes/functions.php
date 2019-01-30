@@ -3391,3 +3391,16 @@ function dokan_is_store_listing() {
 
     return false;
 }
+
+/**
+ * Dokan demo content class instance
+ *
+ * @since DOKAN_SINCE
+ *
+ * @return \Dokan\DemoContents\Controller
+ */
+function dokan_demo_contents() {
+    require_once DOKAN_INC_DIR . '/demo-contents/class-dokan-demo-contents.php';
+
+    return \Dokan\DemoContents\Controller::instance();
+}

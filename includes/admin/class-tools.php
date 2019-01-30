@@ -16,6 +16,8 @@ class Dokan_Tools {
      */
     public function __construct() {
         add_action( 'wp_ajax_create_pages', array( $this, 'create_default_pages' ) );
+        add_action( 'wp_ajax_dokan_import_demo_contents', array( $this, 'import_demo_contents' ) );
+        add_action( 'wp_ajax_dokan_export_demo_contents', array( $this, 'export_demo_contents' ) );
     }
 
     /**
@@ -26,7 +28,6 @@ class Dokan_Tools {
      * @return void
      */
     function create_default_pages() {
-
         if ( ! isset( $_POST['action'] ) || $_POST['action'] !== 'create_pages' ) {
             return wp_send_json_error( __( 'You don\'t have enough permission', 'dokan', '403' ) );
         }
@@ -103,7 +104,7 @@ class Dokan_Tools {
     }
 
     /**
-     * Check a Donan shortcode  page exist or not
+     * Check a Dokan shortcode  page exist or not
      *
      * @since DOKAN_SINCE
      *
@@ -131,5 +132,73 @@ class Dokan_Tools {
         } else {
             return true;
         }
+    }
+
+    /**
+     * Import demo contents
+     *
+     * @since DOKAN_SINCE
+     *
+     * @return void
+     */
+    public function import_demo_contents() {
+        check_ajax_referer( 'dokan_admin', '_nonce' );
+
+        if ( ! current_user_can( 'manage_woocommerce' ) ) {
+            wp_send_json_error( array( 'message' => __( "You don't have permission to perform this action.", 'dokan-lite' ) ), 403 );
+        }
+
+        $attatchment_id = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : 0;
+
+        if ( ! $attatchment_id ) {
+            wp_send_json_error( array( 'message' => __( "Invalid id", 'dokan-lite' ) ), 400 );
+        }
+
+        $attachment = get_attached_file( $attatchment_id );
+
+        if ( ! $attachment || ! file_exists( $attachment ) ) {
+            wp_send_json_error( array( 'message' => __( "Invalid attachment.", 'dokan-lite' ) ), 400 );
+        }
+
+        try {
+            $import = dokan_demo_contents()->importer->import( $attachment );
+
+            if ( is_wp_error( $import ) ) {
+                throw new Exception( $import->get_error_message() );
+            }
+        } catch ( Exception $e ) {
+            $message = $e->getMessage();
+            $code    = $e->getCode() ? $e->getCode() : 422;
+
+            wp_send_json_error( array( 'message' => $message ), $code );
+        }
+
+        return [];
+    }
+
+    /**
+     * Export demo contents
+     *
+     * @since DOKAN_SINCE
+     *
+     * @return void
+     */
+    public function export_demo_contents() {
+        check_ajax_referer( 'dokan_admin', '_nonce' );
+
+        if ( ! current_user_can( 'manage_woocommerce' ) ) {
+            wp_send_json_error( array( 'message' => __( "You don't have permission to perform this action.", 'dokan-lite' ) ), 403 );
+        }
+
+        try {
+            dokan_demo_contents()->exporter->export();
+        } catch ( Exception $e ) {
+            $message = $e->getMessage();
+            $code    = $e->getCode() ? $e->getCode() : 422;
+
+            wp_send_json_error( array( 'message' => $message ), $code );
+        }
+
+        return [];
     }
 }

@@ -153,6 +153,11 @@ class Dokan_Assets {
                 'component' => 'Tools'
             ),
             array(
+                'path'      => '/tools/demo-contents',
+                'name'      => 'DemoContents',
+                'component' => 'DemoContents'
+            ),
+            array(
                 'path'      => '/settings',
                 'name'      => 'Settings',
                 'component' => 'Settings'

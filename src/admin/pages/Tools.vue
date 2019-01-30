@@ -42,6 +42,13 @@
                         button: __('Install Dokan Pages', 'dokan-lite'),
                         action: 'create_pages',
                         callback: this.createPages,
+                    },
+                    {
+                        title: __('Demo Contents', 'dokan-lite'),
+                        desc: __('Install demo content data.', 'dokan-lite'),
+                        button: __('Go to page', 'dokan-lite'),
+                        action: 'dokan_install_demo_contents',
+                        callback: this.demoContents,
                     }
                 ]
             }
@@ -105,6 +112,12 @@
 
                     self.isAjaxWorking = false;
                 } );
+            },
+
+            demoContents(tool) {
+                this.$router.push({
+                    name: 'DemoContents'
+                });
             }
         }
     }
