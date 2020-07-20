@@ -967,3 +967,44 @@ function dokan_is_order_already_exists( $id ) {
 
     return $order_id ? true : false;
 }
+
+/**
+ * Sub order table columns
+ *
+ * @since DOKAN_LITE_SINCE
+ *
+ * @return array
+ */
+function dokan_sub_orders_table_columns() {
+    $columns = apply_filters( 'dokan_sub_order_table_columns', array(
+        array(
+            'id'         => 'order-number',
+            'class_name' => 'order-number',
+            'title'      => __( 'Order', 'dokan-lite' ),
+        ),
+        array(
+            'id'         => 'order-date',
+            'class_name' => 'order-date',
+            'title'      => __( 'Date', 'dokan-lite' ),
+        ),
+        array(
+            'id'         => 'order-status',
+            'class_name' => 'order-status',
+            'title'      => __( 'Status', 'dokan-lite' ),
+        ),
+    ) );
+
+    $columns[] = array(
+        'id'         => 'order-total',
+        'class_name' => 'order-total',
+        'title'      => __( 'Total', 'dokan-lite' ),
+    );
+
+    $columns[] = array(
+        'id'         => 'order-actions',
+        'class_name' => 'order-actions',
+        'title'      => '',
+    );
+
+    return apply_filters( 'dokan_sub_order_table_columns_all', $columns );
+}
