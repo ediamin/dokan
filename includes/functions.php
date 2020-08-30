@@ -3263,16 +3263,23 @@ function dokan_pro_buynow_url() {
 /**
  * Add vendor info in restful wc_order
  *
- * @param object $response
+ * @param \WP_REST_Response $response
  *
- * @return object
+ * @return \WP_REST_Response
  */
 function dokan_add_vendor_info_in_rest_order( $response ) {
+    $author_id = 0;
+
     foreach ( $response as $data ) {
         if ( isset( $data['line_items'] ) ) {
             $product_id = $data['line_items'][0]['product_id'];
             $author_id  = get_post_field( 'post_author', $product_id );
+            break;
         }
+    }
+
+    if ( ! $author_id ) {
+        return $response;
     }
 
     $store = dokan()->vendor->get( $author_id );
